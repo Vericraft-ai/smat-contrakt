@@ -32,7 +32,6 @@ export interface VRFCoordinatorV2MockInterface extends utils.Interface {
     "BASE_FEE()": FunctionFragment;
     "GAS_PRICE_LINK()": FunctionFragment;
     "MAX_CONSUMERS()": FunctionFragment;
-    "acceptOwnership()": FunctionFragment;
     "acceptSubscriptionOwnerTransfer(uint64)": FunctionFragment;
     "addConsumer(uint64,address)": FunctionFragment;
     "cancelSubscription(uint64,address)": FunctionFragment;
@@ -46,13 +45,10 @@ export interface VRFCoordinatorV2MockInterface extends utils.Interface {
     "getFeeConfig()": FunctionFragment;
     "getRequestConfig()": FunctionFragment;
     "getSubscription(uint64)": FunctionFragment;
-    "owner()": FunctionFragment;
     "pendingRequestExists(uint64)": FunctionFragment;
     "removeConsumer(uint64,address)": FunctionFragment;
     "requestRandomWords(bytes32,uint64,uint16,uint32,uint32)": FunctionFragment;
     "requestSubscriptionOwnerTransfer(uint64,address)": FunctionFragment;
-    "setConfig()": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
   };
 
   getFunction(
@@ -60,7 +56,6 @@ export interface VRFCoordinatorV2MockInterface extends utils.Interface {
       | "BASE_FEE"
       | "GAS_PRICE_LINK"
       | "MAX_CONSUMERS"
-      | "acceptOwnership"
       | "acceptSubscriptionOwnerTransfer"
       | "addConsumer"
       | "cancelSubscription"
@@ -74,13 +69,10 @@ export interface VRFCoordinatorV2MockInterface extends utils.Interface {
       | "getFeeConfig"
       | "getRequestConfig"
       | "getSubscription"
-      | "owner"
       | "pendingRequestExists"
       | "removeConsumer"
       | "requestRandomWords"
       | "requestSubscriptionOwnerTransfer"
-      | "setConfig"
-      | "transferOwnership"
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "BASE_FEE", values?: undefined): string;
@@ -90,10 +82,6 @@ export interface VRFCoordinatorV2MockInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "MAX_CONSUMERS",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "acceptOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -149,7 +137,6 @@ export interface VRFCoordinatorV2MockInterface extends utils.Interface {
     functionFragment: "getSubscription",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "pendingRequestExists",
     values: [PromiseOrValue<BigNumberish>]
@@ -172,11 +159,6 @@ export interface VRFCoordinatorV2MockInterface extends utils.Interface {
     functionFragment: "requestSubscriptionOwnerTransfer",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "setConfig", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
-  ): string;
 
   decodeFunctionResult(functionFragment: "BASE_FEE", data: BytesLike): Result;
   decodeFunctionResult(
@@ -185,10 +167,6 @@ export interface VRFCoordinatorV2MockInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "MAX_CONSUMERS",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "acceptOwnership",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -240,7 +218,6 @@ export interface VRFCoordinatorV2MockInterface extends utils.Interface {
     functionFragment: "getSubscription",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "pendingRequestExists",
     data: BytesLike
@@ -257,18 +234,10 @@ export interface VRFCoordinatorV2MockInterface extends utils.Interface {
     functionFragment: "requestSubscriptionOwnerTransfer",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "setConfig", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
 
   events: {
-    "ConfigSet()": EventFragment;
     "ConsumerAdded(uint64,address)": EventFragment;
     "ConsumerRemoved(uint64,address)": EventFragment;
-    "OwnershipTransferRequested(address,address)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
     "RandomWordsFulfilled(uint256,uint256,uint96,bool)": EventFragment;
     "RandomWordsRequested(bytes32,uint256,uint256,uint64,uint16,uint32,uint32,address)": EventFragment;
     "SubscriptionCanceled(uint64,address,uint256)": EventFragment;
@@ -276,22 +245,14 @@ export interface VRFCoordinatorV2MockInterface extends utils.Interface {
     "SubscriptionFunded(uint64,uint256,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "ConfigSet"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ConsumerAdded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ConsumerRemoved"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferRequested"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RandomWordsFulfilled"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RandomWordsRequested"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SubscriptionCanceled"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SubscriptionCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SubscriptionFunded"): EventFragment;
 }
-
-export interface ConfigSetEventObject {}
-export type ConfigSetEvent = TypedEvent<[], ConfigSetEventObject>;
-
-export type ConfigSetEventFilter = TypedEventFilter<ConfigSetEvent>;
 
 export interface ConsumerAddedEventObject {
   subId: BigNumber;
@@ -314,30 +275,6 @@ export type ConsumerRemovedEvent = TypedEvent<
 >;
 
 export type ConsumerRemovedEventFilter = TypedEventFilter<ConsumerRemovedEvent>;
-
-export interface OwnershipTransferRequestedEventObject {
-  from: string;
-  to: string;
-}
-export type OwnershipTransferRequestedEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferRequestedEventObject
->;
-
-export type OwnershipTransferRequestedEventFilter =
-  TypedEventFilter<OwnershipTransferRequestedEvent>;
-
-export interface OwnershipTransferredEventObject {
-  from: string;
-  to: string;
-}
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
-
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface RandomWordsFulfilledEventObject {
   requestId: BigNumber;
@@ -442,12 +379,8 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
 
     MAX_CONSUMERS(overrides?: CallOverrides): Promise<[number]>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     acceptSubscriptionOwnerTransfer(
-      arg0: PromiseOrValue<BigNumberish>,
+      _subId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[void]>;
 
@@ -547,10 +480,8 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
       }
     >;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
-
     pendingRequestExists(
-      arg0: PromiseOrValue<BigNumberish>,
+      subId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -570,19 +501,10 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
     ): Promise<ContractTransaction>;
 
     requestSubscriptionOwnerTransfer(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<string>,
+      _subId: PromiseOrValue<BigNumberish>,
+      _newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[void]>;
-
-    setConfig(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    transferOwnership(
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
   };
 
   BASE_FEE(overrides?: CallOverrides): Promise<BigNumber>;
@@ -591,12 +513,8 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
 
   MAX_CONSUMERS(overrides?: CallOverrides): Promise<number>;
 
-  acceptOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   acceptSubscriptionOwnerTransfer(
-    arg0: PromiseOrValue<BigNumberish>,
+    _subId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<void>;
 
@@ -686,10 +604,8 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
     }
   >;
 
-  owner(overrides?: CallOverrides): Promise<string>;
-
   pendingRequestExists(
-    arg0: PromiseOrValue<BigNumberish>,
+    subId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -709,19 +625,10 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
   ): Promise<ContractTransaction>;
 
   requestSubscriptionOwnerTransfer(
-    arg0: PromiseOrValue<BigNumberish>,
-    arg1: PromiseOrValue<string>,
+    _subId: PromiseOrValue<BigNumberish>,
+    _newOwner: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<void>;
-
-  setConfig(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  transferOwnership(
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
 
   callStatic: {
     BASE_FEE(overrides?: CallOverrides): Promise<BigNumber>;
@@ -730,10 +637,8 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
 
     MAX_CONSUMERS(overrides?: CallOverrides): Promise<number>;
 
-    acceptOwnership(overrides?: CallOverrides): Promise<void>;
-
     acceptSubscriptionOwnerTransfer(
-      arg0: PromiseOrValue<BigNumberish>,
+      _subId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -831,10 +736,8 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
       }
     >;
 
-    owner(overrides?: CallOverrides): Promise<string>;
-
     pendingRequestExists(
-      arg0: PromiseOrValue<BigNumberish>,
+      subId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -854,23 +757,13 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
     ): Promise<BigNumber>;
 
     requestSubscriptionOwnerTransfer(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    setConfig(overrides?: CallOverrides): Promise<void>;
-
-    transferOwnership(
-      to: PromiseOrValue<string>,
+      _subId: PromiseOrValue<BigNumberish>,
+      _newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
 
   filters: {
-    "ConfigSet()"(): ConfigSetEventFilter;
-    ConfigSet(): ConfigSetEventFilter;
-
     "ConsumerAdded(uint64,address)"(
       subId?: PromiseOrValue<BigNumberish> | null,
       consumer?: null
@@ -888,24 +781,6 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
       subId?: PromiseOrValue<BigNumberish> | null,
       consumer?: null
     ): ConsumerRemovedEventFilter;
-
-    "OwnershipTransferRequested(address,address)"(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null
-    ): OwnershipTransferRequestedEventFilter;
-    OwnershipTransferRequested(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null
-    ): OwnershipTransferRequestedEventFilter;
-
-    "OwnershipTransferred(address,address)"(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null
-    ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null
-    ): OwnershipTransferredEventFilter;
 
     "RandomWordsFulfilled(uint256,uint256,uint96,bool)"(
       requestId?: PromiseOrValue<BigNumberish> | null,
@@ -980,12 +855,8 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
 
     MAX_CONSUMERS(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     acceptSubscriptionOwnerTransfer(
-      arg0: PromiseOrValue<BigNumberish>,
+      _subId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1043,10 +914,8 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-
     pendingRequestExists(
-      arg0: PromiseOrValue<BigNumberish>,
+      subId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1066,18 +935,9 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
     ): Promise<BigNumber>;
 
     requestSubscriptionOwnerTransfer(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<string>,
+      _subId: PromiseOrValue<BigNumberish>,
+      _newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    setConfig(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    transferOwnership(
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
@@ -1088,12 +948,8 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
 
     MAX_CONSUMERS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    acceptOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     acceptSubscriptionOwnerTransfer(
-      arg0: PromiseOrValue<BigNumberish>,
+      _subId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1153,10 +1009,8 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     pendingRequestExists(
-      arg0: PromiseOrValue<BigNumberish>,
+      subId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1176,18 +1030,9 @@ export interface VRFCoordinatorV2Mock extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     requestSubscriptionOwnerTransfer(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<string>,
+      _subId: PromiseOrValue<BigNumberish>,
+      _newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    setConfig(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    transferOwnership(
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -3,5 +3,7 @@
 /* eslint-disable */
 import type * as contracts from "./contracts";
 export type { contracts };
+import type * as contractsCcip from "./contracts-ccip";
+export type { contractsCcip };
 import type * as token from "./token";
 export type { token };

@@ -21,6 +21,12 @@ const FORKING_BLOCK_NUMBER = process.env.FORKING_BLOCK_NUMBER
 // Your API key for Etherscan, obtain one at https://etherscan.io/
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "Your etherscan API key"
 const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY || "Your polygonscan API key"
+const AVALANCHE_FUJI_RPC_URL =
+    process.env.AVALANCHE_FUJI_RPC_URL || "https://api.avax-test.network/ext/bc/C/rpc"
+
+const POLYGON_MUMBAI_RPC_URL =
+    process.env.POLYGON_MUMBAI_RPC_URL ||
+    "https://polygon-mumbai.infura.io/v3/3c40ec950bf54cadb16ca809741dcbb2"
 
 const config: HardhatUserConfig = {
     defaultNetwork: "hardhat",
@@ -38,11 +44,18 @@ const config: HardhatUserConfig = {
         localhost: {
             chainId: 31337,
         },
-        fuji: {
-            url: "https://api.avax-test.network/ext/bc/C/rpc",
-            gasPrice: 225000000000,
+        polygonMumbai: {
+            url: POLYGON_MUMBAI_RPC_URL,
+            gas: 225000000000,
+            accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+            chainId: 80001,
+        },
+        avalancheFuji: {
+            url: AVALANCHE_FUJI_RPC_URL,
+            gas: 225000000000,
+            accounts: PRIVATE_KEY !== undefined ? [`0x${PRIVATE_KEY}`] : [],
             chainId: 43113,
-            accounts: [],
+            allowUnlimitedContractSize: true,
         },
         mainnet: {
             url: MAINNET_RPC_URL,
@@ -83,7 +96,10 @@ const config: HardhatUserConfig = {
     solidity: {
         compilers: [
             {
-                version: "0.8.19",
+                version: "0.8.20",
+                settings: {
+                    evmVersion: "paris",
+                },
             },
             {
                 version: "0.8.7",

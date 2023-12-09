@@ -4,7 +4,6 @@
 export type { AggregatorV3Interface } from "./AggregatorV3Interface";
 export type { ChainlinkRequestInterface } from "./ChainlinkRequestInterface";
 export type { ENSInterface } from "./ENSInterface";
-export type { KeeperCompatibleInterface } from "./KeeperCompatibleInterface";
 export type { LinkTokenInterface } from "./LinkTokenInterface";
 export type { OperatorInterface } from "./OperatorInterface";
 export type { OracleInterface } from "./OracleInterface";
